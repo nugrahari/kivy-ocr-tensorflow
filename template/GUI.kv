@@ -1,0 +1,98 @@
+#:import Factory kivy.factory.Factory
+<MyPopup@Popup>
+    id: myPOPUP
+    auto_dismiss: False
+    size_hint: .5, .2
+    title: 'Kecilin Message!!'
+    pos_hint: {"x":0.3, "top":0.9}
+    BoxLayout:
+        orientation: "vertical"
+        size:root.width, root.height
+        Label:
+            id: labelPOPUP
+            text: 'CSV Update'
+        Button:
+            size_hint_y: None
+            height: 10
+            text: 'OK'
+            on_press: myPOPUP.dismiss()
+            background_color: (16/255.0, 235/255.0, 23/255.0, 1)
+
+<MyGridLayout>
+
+    GridLayout:
+        cols: 1
+        size: root.width, root.height
+        padding: 10
+        spacing: 10
+
+        GridLayout:
+            cols: 1
+            size_hint_y: None
+            height: 50
+            padding: 10
+            Label:
+                id: labelTITLE
+                text: 'Pilih Gambah'
+
+        GridLayout:
+            cols: 1
+            size_hint_y: None
+            height: 400
+            padding: 15
+            spacing: 0
+            canvas.before:
+                Color:
+                    rgba: 53/255.0, 53/255.0, 53/255.0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size                
+
+            
+
+            TextInput:
+                id: file_path
+                hint_text: 'Path for Kecilin Scheduling'
+                size_hint_y: None
+                height: 30
+
+            FileChooserIconView:
+                id: filechooser
+                on_selection: file_path.text = self.selection and self.selection[0]
+                dirselect: True
+
+
+        Label:
+            id: labelAction
+            size_hint_y: None
+            height: 30
+            text: 'Action Operation'
+        GridLayout:
+            cols: 3
+            size_hint_y: None
+            height: 30
+
+            Label:
+                id: labelPOPUP
+                text: ''
+
+            Button:
+                text: "Run Klasifikasi"
+                on_press: root.start('all')
+                background_color: (16/255.0, 235/255.0, 23/255.0, 1)
+
+            Label:
+                id: labelPOPUP
+                text: ''
+
+        Label:
+            id: labelAction
+            size_hint_y: None
+            height: 30
+            text: 'History'
+
+        Label:
+            id: labelHistory
+            size_hint_y: None
+            height: 30
+            text: ''
