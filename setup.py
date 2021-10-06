@@ -37,7 +37,7 @@ class MyGridLayout(Widget):
     def __init__(self, **kwargs):
         self.model_path  = os.path.join(application_path, os.getenv('MODEL'))
         self.model  = load_model(self.model_path)
-        self.classes = ['A', 'BA', 'CA', 'DA', 'GA', 'HA', 'JA', 'KA', 'LA', 'MA', 'MPA', 'NA', 'NCA', 'NGA', 'NGKA', 'NRA', 'NYA', 'PA', 'RA', 'SA', 'TA', 'WA', 'YA']
+        self.classes = ['Semi-Matang','Matang', 'Mentah']
         self.popups = MyPopup()
         self.history = ''
         self.counter = 0
@@ -49,14 +49,26 @@ class MyGridLayout(Widget):
         if file_path == '':
             self.popup("Error, File path is invalid")
         else:
-            image = cv2.imread(file_path)
-            feature = self.image_to_feature_vector(image) / 255.0
-
-            probs = self.model.predict(feature)[0]
-            prediction = probs.argmax(axis=0)
-            self.popup(F"Sukses, Gambar Terprediksi {self.classes[prediction]}")
+            data_test = []
+            img_size = 224
+            image = cv2.imread(file_path)[...,::-1]
+            resized_arr = cv2.resize(image, (img_size, img_size))
+            data_test.append([resized_arr, 2])
+            data_test = np.array(data_test)
+            x_test, y_test = [], []
+            for feature, label in data_test:
+              x_test.append(feature)
+              y_test.append(label)
+            x_test = np.array(x_test) / 255
+            x_test.reshape(-1, img_size, img_size, 1)
+            y_test = np.array(y_test)
+            probs = self.model.predict([x_test])
+            probs.shape
+            prediction = probs.argmax(axis=1)
             
-            self.history += f'{self.classes[prediction]}, '
+            self.popup(F"Sukses, Gambar Terprediksi {self.classes[prediction[0]]}")
+            
+            self.history += f'{self.classes[prediction[0]]}, '
 
         self.ids.labelHistory.text = self.history
         if self.counter == 18:

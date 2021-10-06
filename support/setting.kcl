@@ -1,3 +1,3 @@
-MODEL=support/model.h5
-CLASSES=['A', 'BA', 'CA', 'DA', 'GA', 'HA', 'JA', 'KA', 'LA', 'MA', 'MPA', 'NAS', 'NCA', 'NGA', 'NGKA', 'NRA', 'NYA', 'PA', 'RA', 'SA', 'TA', 'WA', 'YA']
-TITLE_aps=Aplikasi OCR dari sebuah gambar
+MODEL=support/model-new.h5
+CLASSES=['Semi-Matang/1','Matang', 'Mentah']
+TITLE_aps=Aplikasi Deteksi Kematangan Buah Tomat
